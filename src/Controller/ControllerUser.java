@@ -9,10 +9,12 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ControllerUser {
     static UserJSON userJSON = new UserJSON();
     String fname = "src/Database/user.json";
+    static Scanner input = new Scanner(System.in);
     public boolean cekFile(){
         boolean cek = false;
         try {
@@ -92,10 +94,17 @@ public class ControllerUser {
     }
 
     public void addPetugas(String unamePetugas, String passPetugas, String namaPetugas){
+        int cek = 0;
         if (cekFile()){
             ArrayList<User> userArrayList = readFromFile();
             if(userArrayList != null){
+                while(cekUsername(unamePetugas)){
+                    System.out.println("Username sudah ada!");
+                    System.out.print("Masukkan Username Petugas yang baru : ");
+                    unamePetugas = input.nextLine();
+                }
                 userArrayList.add(new User(unamePetugas, passPetugas, namaPetugas));
+                System.out.println("Data berhasil ditambahkan!");
                 writeFileJSON(userArrayList);
             }else{
                 userArrayList = new ArrayList<User>();
@@ -108,18 +117,23 @@ public class ControllerUser {
     }
 
     public void deletePetugas(String unamePetugas){
+        int terhapus = 0;
         if (cekFile()){
             ArrayList<User> userArrayList = readFromFile();
             if(userArrayList != null){
                 for (User user:userArrayList){
                     if(unamePetugas.equals(user.getUsername())){
                         userArrayList.remove(user);
-                        System.out.println("Petugas berhasil dihapus!");
+                        terhapus = 1;
                         break;
-                    }else{
-                        System.out.println("Petugas tidak ditemukan!");
                     }
                 }
+                if(terhapus == 1){
+                    System.out.println("Petugas Berhasil di hapus !");
+                }else{
+                    System.out.println("Petugas tidak ditemukan!");
+                }
+
                 writeFileJSON(userArrayList);
             } else {
                 System.out.println("Tidak ada Data !");
@@ -136,5 +150,15 @@ public class ControllerUser {
             System.out.println("Username : "+user.getUsername());
             System.out.println("Nama : "+user.getNama());
         }
+    }
+
+    public boolean cekUsername(String username){
+        ArrayList<User> userArrayList = readFromFile();
+        for(User user:userArrayList){
+            if(username.equals(user.getUsername())){
+                return true;
+            }
+        }
+        return false;
     }
 }

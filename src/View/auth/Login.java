@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Login {
     static ControllerUser cUser = new ControllerUser();
-    //public static String uname;
+    public static String namaP;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.println("----- LOGIN -----");
@@ -23,18 +23,17 @@ public class Login {
                 ArrayList<User> userList = cUser.readFromFile();
                 if(userList != null){
                     for(int i=0; i<userList.size(); i++){
-                        if(uname.equals(userList.get(i).getUsername())){
-                            if(pass.equals(userList.get(i).getPassword())){
+                        User user = userList.get(i);
+                        if(uname.equals(user.getUsername())){
+                            if(pass.equals(user.getPassword())){
                                 System.out.println("Login Berhasil !");
+                                namaP = user.getNama();
                                 PetugasMain.main(args);
                                 break input;
                             }else{
                                 System.out.println("Username atau Password salah !");
                                 break;
                             }
-                        }else{
-                            System.out.println("Username salah !");
-                            break;
                         }
                     }
                 }

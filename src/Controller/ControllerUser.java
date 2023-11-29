@@ -94,7 +94,6 @@ public class ControllerUser {
     }
 
     public void addPetugas(String unamePetugas, String passPetugas, String namaPetugas){
-        int cek = 0;
         if (cekFile()){
             ArrayList<User> userArrayList = readFromFile();
             if(userArrayList != null){

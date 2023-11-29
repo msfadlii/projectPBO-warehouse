@@ -31,7 +31,6 @@ public class PetugasMain {
                     int berat = input.nextInt();
 
                     cBarang.tambahBarang(no_resi, tanggalTiba.format(format), Penerima, berat, namaP);
-
                     continue;
                 case 2:
                     System.out.println("----- LIST BARANG -----");

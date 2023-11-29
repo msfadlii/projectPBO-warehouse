@@ -10,14 +10,16 @@ public class Barang {
     private String Penerima;
     private int berat;
     private String namaPetugas;
+    private Kategori kategori;
 
 
-    public Barang(String no_resi, String tanggaltiba, String Penerima, int berat, String namaPetugas) {
+    public Barang(String no_resi, String tanggaltiba, String Penerima, int berat, String namaPetugas,Kategori kategori) {
         this.no_resi = no_resi;
         this.Tanggaltiba = tanggaltiba;
         this.Penerima = Penerima;
         this.berat = berat;
         this.namaPetugas = namaPetugas;
+        this.kategori = kategori;
     }
 
     public Barang(){
@@ -46,5 +48,7 @@ public class Barang {
         return namaPetugas;
     }
 
-
+    public Kategori getKategori() {
+        return kategori;
+    }
 }

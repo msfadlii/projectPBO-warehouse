@@ -46,7 +46,6 @@ public class ControllerUser extends CUserJSON {
                 }else{
                     System.out.println("Petugas tidak ditemukan!");
                 }
-
                 writeFileJSON(userArrayList);
             } else {
                 System.out.println("Tidak ada Data !");

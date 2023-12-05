@@ -1,11 +1,7 @@
 package View.admin;
 import Controller.ControllerUser;
 import Model.User;
-import Model.UserJSON;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import java.io.*;
 import java.util.*;
 
 public class AdminMain {

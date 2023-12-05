@@ -11,17 +11,14 @@ public class Barang {
     private int berat;
     private String namaPetugas;
     private Kategori kategori;
-
-
-    public Barang(String no_resi, String tanggaltiba, String Penerima, int berat, String namaPetugas,Kategori kategori) {
+    public Barang(String no_resi, String tanggalTiba, String Penerima, int berat, String namaPetugas, String namaKategori) {
         this.no_resi = no_resi;
-        this.Tanggaltiba = tanggaltiba;
+        this.Tanggaltiba = tanggalTiba;
         this.Penerima = Penerima;
         this.berat = berat;
         this.namaPetugas = namaPetugas;
-        this.kategori = kategori;
+        this.kategori = new Kategori(namaKategori);
     }
-
     public Barang(){
 
     }
@@ -39,7 +36,6 @@ public class Barang {
     }
 
 
-
     public int getBerat() {
         return berat;
     }
@@ -51,4 +47,5 @@ public class Barang {
     public Kategori getKategori() {
         return kategori;
     }
+
 }

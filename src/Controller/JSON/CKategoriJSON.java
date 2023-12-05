@@ -26,32 +26,6 @@ public class CKategoriJSON {
         return cek;
     }
 
-    public JSONArray convertArrayListtoJSONArray(ArrayList<Kategori> listKategori){
-        if(listKategori == null){
-            return null;
-        } else {
-            JSONArray arrkategori = new JSONArray();
-            for (Kategori kategori : listKategori) {
-                JSONObject objKategori = new JSONObject();
-                objKategori.put("Kategori", kategori.getNama());
-
-            }
-            return arrkategori;
-        }
-    }
-
-    public void writeFileJSON(ArrayList<Kategori> listkategori){
-        JSONArray arrKategori = convertArrayListtoJSONArray(listkategori);
-        try {
-            FileWriter fileWriter = new FileWriter(fname);
-            fileWriter.write(arrKategori.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     public ArrayList<Kategori> convertJSONArraytoArrayList(JSONArray arrKategori){
         if(arrKategori == null){
             return null;
@@ -59,10 +33,10 @@ public class CKategoriJSON {
             ArrayList<Kategori> listKategori = new ArrayList<>();
             for(Object objkategori : arrKategori){
                 JSONObject jsonObject = (JSONObject) objkategori;
-                String nama = jsonObject.get("nama").toString();
+                int nomor = Integer.parseInt(jsonObject.get("nomor").toString());
+                String nama = jsonObject.get("nama_kategori").toString();
 
-
-                listKategori.add(new Kategori(nama));
+                listKategori.add(new Kategori(nomor, nama));
             }
             return listKategori;
         }
@@ -88,5 +62,4 @@ public class CKategoriJSON {
             return null;
         }
     }
-
 }

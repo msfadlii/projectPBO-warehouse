@@ -12,13 +12,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+
 
 public class ControllerBarang extends CBarangJSON {
     private ArrayList<Barang> listBarangMasuk = readFromFileIn();
     private ArrayList<Barang> listBarang = readFromFile();
-
     private ArrayList<CheckoutBarang> listBarangKeluar = readFromFileOut();
 
     public void tambahBarang(String no_resi, String tanggalTiba, String penerima, int berat, String namaPetugas, String namaKategori) {
@@ -39,8 +44,41 @@ public class ControllerBarang extends CBarangJSON {
             System.out.println("Database Barang tidak ada !");
         }
     }
+
+    public boolean updateBarang(String no_resi, String penerima, int berat, String namaKategori){
+        Barang dataBarang = searchBarang(no_resi);
+        if(dataBarang != null){
+            dataBarang.setPenerima(penerima);
+            dataBarang.setBerat(berat);
+            dataBarang.setKategori(namaKategori);
+            writeFileJSON(listBarang);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteBarang(String no_resi){
+        Barang dataBarang = searchBarang(no_resi);
+        if(dataBarang != null){
+            listBarang.remove(dataBarang);
+            writeFileJSON(listBarang);
+            return true;
+        }
+        return false;
+    }
+
+    public Barang searchBarang(String cari){
+        Barang dataBarang = null;
+        for (Barang barang:listBarang){
+            if(cari.equals(barang.getNamaPetugas()) || cari.equals(barang.getKategori().getNama()) || cari.equals(barang.getNo_resi())){
+                return barang;
+            }
+        }
+        return dataBarang;
+    }
+
     public void listBarangMasuk(){
-        String output = "";
+        listBarangMasuk = readFromFileIn();
         if(listBarangMasuk != null){
             for (Barang barang:listBarangMasuk){
                 System.out.println(Warna.output_list+"-----------------");
@@ -51,22 +89,13 @@ public class ControllerBarang extends CBarangJSON {
                 System.out.println("Tanggal         : "+ barang.getTanggaltiba());
                 System.out.println("Petugas         : "+barang.getNamaPetugas());
                 System.out.println("-----------------"+Warna.reset_warna);
-//                output = Warna.output_list+"-----------------"+
-//                        "\nNomor Resi      : "+barang.getNo_resi()+
-//                        "\nKategori        : " + barang.getKategori().getNama()+
-//                        "\nBerat           : "+barang.getBerat()+
-//                        "\nPenerima        : "+barang.getPenerima()+
-//                        "\nTanggal         : "+ barang.getTanggaltiba()+
-//                        "\nPetugas         : "+barang.getNamaPetugas()+
-//                        "\n-----------------"+Warna.reset_warna;
-//                return output;
             }
         }else{
             System.out.println("Tidak ada barang!");
         }
-//        return output;
     }
     public void listBarang(){
+        listBarang = readFromFile();
         if(listBarang != null){
             for (Barang barang:listBarang){
                 System.out.println(Warna.output_list+"-----------------");
@@ -84,6 +113,7 @@ public class ControllerBarang extends CBarangJSON {
     }
 
     public void listBarangKeluar(){
+        listBarangKeluar = readFromFileOut();
         if(listBarangKeluar != null){
             for (CheckoutBarang barang:listBarangKeluar){
                 System.out.println(Warna.output_list+"-----------------");
@@ -98,19 +128,6 @@ public class ControllerBarang extends CBarangJSON {
             }
         }else{
             System.out.println("Tidak ada barang!");
-        }
-    }
-
-    public void searchBarang(String cari){
-        for (Barang barang:listBarang){
-            if(cari.equals(barang.getNamaPetugas()) || cari.equals(barang.getKategori().getNama()) || cari.equals(barang.getNo_resi())){
-                System.out.println("Nomor Resi      : "+barang.getNo_resi());
-                System.out.println("Kategori        : " + barang.getKategori().getNama());
-                System.out.println("Berat           : "+barang.getBerat());
-                System.out.println("Penerima        : "+barang.getPenerima());
-                System.out.println("Tanggal         : "+ barang.getTanggaltiba());
-                System.out.println("Petugas         : "+barang.getNamaPetugas());
-            }
         }
     }
 
@@ -176,10 +193,7 @@ public class ControllerBarang extends CBarangJSON {
         }
     }
 
-    public void createFile(String jenis_laporan){
-//        String pathMasuk = "src/Laporan/fileLaporanMasuk.txt";
-//        String pathKeluar = "src/Laporan/fileLaporanKeluar.txt";
-//        String path = "src/Laporan/fileLaporan.txt";
+    public void cetakLaporan(String jenis_laporan){
         String path;
         if(jenis_laporan.equals("masuk")){
             path = "src/Laporan/fileLaporanMasuk.txt";
@@ -199,37 +213,42 @@ public class ControllerBarang extends CBarangJSON {
             e.printStackTrace();
         }
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        DayOfWeek dow = now.getDayOfWeek();
         //Write File
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
-            if(jenis_laporan.equals("masuk")){
-                if(listBarangMasuk != null){
+            if (jenis_laporan.equals("masuk")) {
+                writer.write("---------------------------------------------------------------------------------------------------------\n\t\t\t\t\t\t\t\t\t\t\tLAPORAN BARANG MASUK\n---------------------------------------------------------------------------------------------------------\n");
+                writer.write("Tanggal : "+dow+", "+dtf.format(now)+
+                                 "\nPetugas : "+Login.namaP+
+                                "\n---------------------------------------------------------------------------------------------------------");
+                writer.write("\nNOMOR RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tTANGGAL \t\t\t\t\tPETUGAS\n");
+                if (listBarangMasuk != null) {
                     for (Barang barang:listBarangMasuk){
-                        String print =
-                                "----------------------------------------------------------------------------------"+
-                                        "\nLAPORAN BARANG MASUK\n"+
-                                "%5s %10s %10s %8s %20% %17s"+"NOMOR RESI"+"KATEGORI"+"BERAT"+"PENERIMA"+"TANGGAL MASUK"+"PETUGAS"+
-                        "\n----------------------------------------------------------------------------------"+
-                        "\nNomor Resi      : "+barang.getNo_resi()+
-                        "\nKategori        : " + barang.getKategori().getNama()+
-                        "\nBerat           : "+barang.getBerat()+
-                        "\nPenerima        : "+barang.getPenerima()+
-                        "\nTanggal         : "+ barang.getTanggaltiba()+
-                        "\nPetugas         : "+barang.getNamaPetugas()+
-                        "\n----------------------------------------------------------------------------------";
-
-                        writer.write(print);
+                        writer.write(
+                                barang.getNo_resi()+" \t\t"+
+                                        barang.getKategori().getNama()+" \t\t\t"+
+                                        barang.getBerat()+" \t\t"+
+                                        barang.getPenerima()+" \t\t\t"+
+                                        barang.getTanggaltiba()+" \t\t"+
+                                        barang.getNamaPetugas()+"\n"
+                        );
                     }
-                }else{
+                } else {
                     System.out.println("Tidak ada barang!");
                 }
-            }else if(jenis_laporan.equals("keluar")){
+            } else if (jenis_laporan.equals("keluar")) {
                 path = "src/Laporan/fileLaporanKeluar.txt";
-            }else{
+            } else {
                 path = "src/Laporan/fileLaporan.txt";
             }
+
+
             System.out.println("Berhasil Menulis File.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

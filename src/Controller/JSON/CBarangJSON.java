@@ -2,7 +2,6 @@ package Controller.JSON;
 
 import Model.Barang;
 import Model.CheckoutBarang;
-import Model.Kategori;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

@@ -48,4 +48,15 @@ public class Barang {
         return kategori;
     }
 
+    public void setBerat(int berat) {
+        this.berat = berat;
+    }
+
+    public void setPenerima(String penerima) {
+        Penerima = penerima;
+    }
+
+    public void setKategori(String kategori) {
+        this.kategori = new Kategori(kategori);
+    }
 }

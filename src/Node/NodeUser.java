@@ -1,17 +1,17 @@
-package Model;
+package Node;
 
-public class User {
+public class NodeUser {
     private String username;
     private String password;
     private String nama;
 
-    public User(String username, String password, String nama) {
+    public NodeUser(String username, String password, String nama) {
         this.username = username;
         this.password = password;
         this.nama = nama;
     }
 
-    public User(){
+    public NodeUser(){
 
     }
 

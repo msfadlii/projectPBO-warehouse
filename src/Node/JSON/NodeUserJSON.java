@@ -1,10 +1,10 @@
-package Model;
+package Node.JSON;
 
-public class UserJSON {
+public class NodeUserJSON {
     private String username;
     private String password;
     private String nama;
-    public UserJSON(){
+    public NodeUserJSON(){
         this.username = "username";
         this.password = "password";
         this.nama = "nama";

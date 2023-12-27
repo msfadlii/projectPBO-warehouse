@@ -1,76 +1,54 @@
 package Controller;
 
-import Controller.JSON.CUserJSON;
-import Model.User;
+import Model.JSON.ModelJSON;
+import Model.ModelUser;
+import Node.NodeUser;
+import View.PetugasMain;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ControllerUser extends CUserJSON {
-        static Scanner input = new Scanner(System.in);
-    public void addPetugas(String unamePetugas, String passPetugas, String namaPetugas){
-        if (cekFile()){
-            ArrayList<User> userArrayList = readFromFile();
-            if(userArrayList != null){
-                while(cekUsername(unamePetugas)){
-                    System.out.println("Username sudah ada!");
-                    System.out.print("Masukkan Username Petugas yang baru : ");
-                    unamePetugas = input.nextLine();
-                }
-                userArrayList.add(new User(unamePetugas, passPetugas, namaPetugas));
-                System.out.println("Data berhasil ditambahkan!");
-                writeFileJSON(userArrayList);
-            }else{
-                userArrayList = new ArrayList<User>();
-                userArrayList.add(new User(unamePetugas, passPetugas,namaPetugas));
-                writeFileJSON(userArrayList);
-            }
-        } else {
-            System.out.println("Database User tidak ada !");
-        }
-    }
+public class ControllerUser {
+    static ModelUser mUser = new ModelUser();
+    static Scanner input = new Scanner(System.in);
 
-    public void deletePetugas(String unamePetugas){
-        int terhapus = 0;
-        if (cekFile()){
-            ArrayList<User> userArrayList = readFromFile();
-            if(userArrayList != null){
-                for (User user:userArrayList){
-                    if(unamePetugas.equals(user.getUsername())){
-                        userArrayList.remove(user);
-                        terhapus = 1;
-                        break;
-                    }
-                }
-                if(terhapus == 1){
-                    System.out.println("Petugas Berhasil di hapus !");
+    public boolean login(String uname, String pass){
+        NodeUser user = mUser.login();
+        if(user != null){
+            if(uname.equals(user.getUsername())){
+                if(pass.equals(user.getPassword())){
+                    return true;
                 }else{
-                    System.out.println("Petugas tidak ditemukan!");
+                    return false;
                 }
-                writeFileJSON(userArrayList);
-            } else {
-                System.out.println("Tidak ada Data !");
             }
-        } else {
-            System.out.println("Database tidak ada");
-        }
-    }
-
-    public void showPetugas(){
-        ArrayList<User> listUser = readFromFile();
-        for (User user:listUser){
-            System.out.println("-----------------");
-            System.out.println("Username : "+user.getUsername());
-            System.out.println("Nama : "+user.getNama());
-        }
-    }
-
-    public boolean cekUsername(String username){
-        ArrayList<User> userArrayList = readFromFile();
-        for(User user:userArrayList){
-            if(username.equals(user.getUsername())){
-                return true;
-            }
+        }else{
+            System.out.println("Data user kosong!");
         }
         return false;
+    }
+
+    public void addUser(String uname, String pass, String nama){
+        while(mUser.searchUser(uname) != -1){
+            System.out.println("Username sudah ada!");
+            System.out.println("Masukkan username Petugas baru : ");
+            uname = input.nextLine();
+        }
+        mUser.addUser(uname, pass, nama);
+        System.out.println("User baru berhasil ditambahkan!");
+    }
+    public void deleteUser(String uname){
+        mUser.deleteUser(uname);
+        System.out.println("User telah dihapus!");
+    }
+
+    public void listUser(){
+        ArrayList<NodeUser> arrUser = mUser.listUser();
+        for (NodeUser nodeUser:arrUser) {
+            System.out.println("Nama     : "+nodeUser.getNama());
+            System.out.println("Username : "+nodeUser.getUsername());
+            System.out.println("------------------------------");
+        }
     }
 }

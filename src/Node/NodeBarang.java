@@ -1,25 +1,21 @@
-package Model;
+package Node;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
-public class Barang {
+public class NodeBarang {
     private String no_resi;
     private String Tanggaltiba;
     private String Penerima;
     private int berat;
     private String namaPetugas;
-    private Kategori kategori;
-    public Barang(String no_resi, String tanggalTiba, String Penerima, int berat, String namaPetugas, String namaKategori) {
+    private NodeKategori nodeKategori;
+    public NodeBarang(String no_resi, String tanggalTiba, String Penerima, int berat, String namaPetugas, String namaKategori) {
         this.no_resi = no_resi;
         this.Tanggaltiba = tanggalTiba;
         this.Penerima = Penerima;
         this.berat = berat;
         this.namaPetugas = namaPetugas;
-        this.kategori = new Kategori(namaKategori);
+        this.nodeKategori = new NodeKategori(namaKategori);
     }
-    public Barang(){
+    public NodeBarang(){
 
     }
 
@@ -44,8 +40,8 @@ public class Barang {
         return namaPetugas;
     }
 
-    public Kategori getKategori() {
-        return kategori;
+    public NodeKategori getKategori() {
+        return nodeKategori;
     }
 
     public void setBerat(int berat) {
@@ -57,6 +53,6 @@ public class Barang {
     }
 
     public void setKategori(String kategori) {
-        this.kategori = new Kategori(kategori);
+        this.nodeKategori = new NodeKategori(kategori);
     }
 }

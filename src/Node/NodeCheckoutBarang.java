@@ -1,9 +1,9 @@
-package Model;
+package Node;
 
-public class CheckoutBarang extends Barang{
+public class NodeCheckoutBarang extends NodeBarang {
     private String tanggalKeluar;
 
-    public CheckoutBarang(String no_resi, String tanggalTiba, String Penerima, int berat, String namaPetugas, String namaKategori, String tanggalKeluar) {
+    public NodeCheckoutBarang(String no_resi, String tanggalTiba, String Penerima, int berat, String namaPetugas, String namaKategori, String tanggalKeluar) {
         super(no_resi, tanggalTiba, Penerima, berat, namaPetugas, namaKategori);
         this.tanggalKeluar = tanggalKeluar;
     }

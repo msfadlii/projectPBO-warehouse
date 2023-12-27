@@ -1,16 +1,18 @@
-package View.admin;
+package View;
 import Controller.ControllerUser;
-import Model.User;
+import Model.ModelUser;
+import Node.NodeUser;
 
 import java.util.*;
 
 public class AdminMain {
     static Scanner input = new Scanner(System.in);
-    static ArrayList<User> userArrList = new ArrayList<>();
+    static ArrayList<NodeUser> nodeUserArrList = new ArrayList<>();
+//    static ModelUser cUser = new ModelUser();
     static ControllerUser cUser = new ControllerUser();
     void menuAdmin(){
         System.out.println("----- MENU ADMIN -----");
-        System.out.println("1. Tambah Petugas\n2. Hapus Petugas\n3. Login\n4. List Petugas");
+        System.out.println("1. Tambah Petugas\n2. Hapus Petugas\n3. List Petugas");
         System.out.print("Masukkan pilihan anda : ");
         int pilihan = input.nextInt();
         input.nextLine();
@@ -24,19 +26,19 @@ public class AdminMain {
                 System.out.print("Masukkan Nama Petugas : ");
                 String namaPetugas = input.nextLine();
 
-                cUser.addPetugas(unamePetugas, passPetugas, namaPetugas);
+                cUser.addUser(unamePetugas, passPetugas, namaPetugas);
                 break;
             }
             case 2: {
                 System.out.println("----- Hapus Petugas -----");
                 System.out.print("Masukkan Username Petugas : ");
                 String unamePetugas = input.nextLine();
-                cUser.deletePetugas(unamePetugas);
+                cUser.deleteUser(unamePetugas);
                 break;
             }
-            case 4: {
+            case 3: {
                 System.out.println("----- LIST PETUGAS -----");
-                cUser.showPetugas();
+                cUser.listUser();
                 break;
             }
             default:
@@ -46,7 +48,6 @@ public class AdminMain {
     }
     public static void main(String[] args) {
         AdminMain objAdmin = new AdminMain();
-
         while(true){
             objAdmin.menuAdmin();
         }

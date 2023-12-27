@@ -1,7 +1,6 @@
-package Controller.JSON;
+package Model.JSON;
 
-import Model.Barang;
-import Model.Kategori;
+import Node.NodeKategori;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,7 +9,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.util.ArrayList;
 
-public class CKategoriJSON {
+public class MKategoriJSON {
     static String fname = "src/Database/kategori.json";
 
     public boolean cekFile(){
@@ -26,23 +25,23 @@ public class CKategoriJSON {
         return cek;
     }
 
-    public ArrayList<Kategori> convertJSONArraytoArrayList(JSONArray arrKategori){
+    public ArrayList<NodeKategori> convertJSONArraytoArrayList(JSONArray arrKategori){
         if(arrKategori == null){
             return null;
         } else {
-            ArrayList<Kategori> listKategori = new ArrayList<>();
+            ArrayList<NodeKategori> listNodeKategori = new ArrayList<>();
             for(Object objkategori : arrKategori){
                 JSONObject jsonObject = (JSONObject) objkategori;
                 int nomor = Integer.parseInt(jsonObject.get("nomor").toString());
                 String nama = jsonObject.get("nama_kategori").toString();
 
-                listKategori.add(new Kategori(nomor, nama));
+                listNodeKategori.add(new NodeKategori(nomor, nama));
             }
-            return listKategori;
+            return listNodeKategori;
         }
     }
 
-    public ArrayList<Kategori> readFromFile(){
+    public ArrayList<NodeKategori> readFromFile(){
         if(cekFile()){
             ArrayList listKategori = null;
             JSONParser parser = new JSONParser();

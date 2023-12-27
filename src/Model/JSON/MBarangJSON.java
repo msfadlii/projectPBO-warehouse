@@ -1,7 +1,7 @@
-package Controller.JSON;
+package Model.JSON;
 
-import Model.Barang;
-import Model.CheckoutBarang;
+import Node.NodeBarang;
+import Node.NodeCheckoutBarang;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,7 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.util.ArrayList;
 
-public class CBarangJSON {
+public class MBarangJSON {
     static String fnameIn = "src/Database/barang_masuk.json";
     static String fname = "src/Database/barang.json";
     static String fnameOut = "src/Database/barang_keluar.json";
@@ -27,27 +27,27 @@ public class CBarangJSON {
         return cek;
     }
 
-    public JSONArray convertArrayListtoJSONArray(ArrayList<Barang> listBarang){
-        if(listBarang == null){
+    public JSONArray convertArrayListtoJSONArray(ArrayList<NodeBarang> listNodeBarang){
+        if(listNodeBarang == null){
             return null;
         } else {
             JSONArray arrBarang = new JSONArray();
-            for (Barang barang : listBarang) {
+            for (NodeBarang nodeBarang : listNodeBarang) {
                 JSONObject objBarang = new JSONObject();
-                objBarang.put("no_resi", barang.getNo_resi());
-                objBarang.put("kategori", barang.getKategori().getNama());
-                objBarang.put("penerima", barang.getPenerima());
-                objBarang.put("berat", barang.getBerat());
-                objBarang.put("tanggal", barang.getTanggaltiba());
-                objBarang.put("petugas_in", barang.getNamaPetugas());
+                objBarang.put("no_resi", nodeBarang.getNo_resi());
+                objBarang.put("kategori", nodeBarang.getKategori().getNama());
+                objBarang.put("penerima", nodeBarang.getPenerima());
+                objBarang.put("berat", nodeBarang.getBerat());
+                objBarang.put("tanggal", nodeBarang.getTanggaltiba());
+                objBarang.put("petugas_in", nodeBarang.getNamaPetugas());
                 arrBarang.add(objBarang);
             }
             return arrBarang;
         }
     }
 
-    public void writeFileJSON(ArrayList<Barang> listBarang){
-        JSONArray arrBarang = convertArrayListtoJSONArray(listBarang);
+    public void writeFileJSON(ArrayList<NodeBarang> listNodeBarang){
+        JSONArray arrBarang = convertArrayListtoJSONArray(listNodeBarang);
         try {
             FileWriter fileWriter = new FileWriter(fname);
             fileWriter.write(arrBarang.toJSONString());
@@ -58,11 +58,11 @@ public class CBarangJSON {
         }
     }
 
-    public ArrayList<Barang> convertJSONArraytoArrayList(JSONArray arrBarang){
+    public ArrayList<NodeBarang> convertJSONArraytoArrayList(JSONArray arrBarang){
         if(arrBarang == null){
             return null;
         } else {
-            ArrayList<Barang> listBarang = new ArrayList<>();
+            ArrayList<NodeBarang> listNodeBarang = new ArrayList<>();
             for(Object objBarang : arrBarang){
                 JSONObject jsonObject = (JSONObject) objBarang;
                 String no_resi = jsonObject.get("no_resi").toString();
@@ -71,13 +71,13 @@ public class CBarangJSON {
                 int berat = Integer.parseInt(jsonObject.get("berat").toString());
                 String tanggal = jsonObject.get("tanggal").toString();
                 String nama_petugas = jsonObject.get("petugas_in").toString();
-                listBarang.add(new Barang(no_resi, tanggal, penerima, berat, nama_petugas, sKategori));
+                listNodeBarang.add(new NodeBarang(no_resi, tanggal, penerima, berat, nama_petugas, sKategori));
             }
-            return listBarang;
+            return listNodeBarang;
         }
     }
 
-    public ArrayList<Barang> readFromFile(){
+    public ArrayList<NodeBarang> readFromFile(){
         if(cekFile()){
             ArrayList listBarang = null;
             JSONParser parser = new JSONParser();
@@ -115,8 +115,8 @@ public class CBarangJSON {
         return cek;
     }
 
-    public void writeFJSONIn(ArrayList<Barang> listBarang){
-        JSONArray arrBarang = convertArrayListtoJSONArray(listBarang);
+    public void writeFJSONIn(ArrayList<NodeBarang> listNodeBarang){
+        JSONArray arrBarang = convertArrayListtoJSONArray(listNodeBarang);
         try {
             FileWriter fileWriter = new FileWriter(fnameIn);
             fileWriter.write(arrBarang.toJSONString());
@@ -127,7 +127,7 @@ public class CBarangJSON {
         }
     }
 
-    public ArrayList<Barang> readFromFileIn(){
+    public ArrayList<NodeBarang> readFromFileIn(){
         if(cekFile()){
             ArrayList listBarang = null;
             JSONParser parser = new JSONParser();
@@ -165,19 +165,19 @@ public class CBarangJSON {
         return cek;
     }
 
-    public JSONArray convertALtoJSONArr(ArrayList<CheckoutBarang> listBarang){
+    public JSONArray convertALtoJSONArr(ArrayList<NodeCheckoutBarang> listBarang){
         if(listBarang == null){
             return null;
         } else {
             JSONArray arrBarang = new JSONArray();
-            for (CheckoutBarang barang : listBarang) {
+            for (NodeCheckoutBarang barang : listBarang) {
                 JSONObject objBarang = new JSONObject();
                 objBarang.put("no_resi", barang.getNo_resi());
                 objBarang.put("kategori", barang.getKategori().getNama());
                 objBarang.put("berat", barang.getBerat());
                 objBarang.put("penerima", barang.getPenerima());
                 objBarang.put("tanggal_masuk", barang.getTanggaltiba());
-                objBarang.put("petugas_in", barang.getNamaPetugas());
+                objBarang.put("petugas", barang.getNamaPetugas());
                 objBarang.put("tanggal_keluar", barang.getTanggalKeluar());
                 arrBarang.add(objBarang);
             }
@@ -185,7 +185,7 @@ public class CBarangJSON {
         }
     }
 
-    public void writeFJSON(ArrayList<CheckoutBarang> listBarang){
+    public void writeFJSON(ArrayList<NodeCheckoutBarang> listBarang){
         JSONArray arrBarang = convertALtoJSONArr(listBarang);
         try {
             FileWriter fileWriter = new FileWriter(fnameOut);
@@ -197,11 +197,11 @@ public class CBarangJSON {
         }
     }
 
-    public ArrayList<CheckoutBarang> convertJArrtoAL(JSONArray arrBarang){
+    public ArrayList<NodeCheckoutBarang> convertJArrtoAL(JSONArray arrBarang){
         if(arrBarang == null){
             return null;
         } else {
-            ArrayList<CheckoutBarang> listBarang = new ArrayList<>();
+            ArrayList<NodeCheckoutBarang> listBarang = new ArrayList<>();
             for(Object objBarang : arrBarang){
                 JSONObject jsonObject = (JSONObject) objBarang;
                 String no_resi = jsonObject.get("no_resi").toString();
@@ -209,15 +209,15 @@ public class CBarangJSON {
                 int berat = Integer.parseInt(jsonObject.get("berat").toString());
                 String penerima = jsonObject.get("penerima").toString();
                 String tanggal = jsonObject.get("tanggal_masuk").toString();
-                String nama_petugas = jsonObject.get("petugas_in").toString();
+                String nama_petugas = jsonObject.get("petugas").toString();
                 String tglKeluar = jsonObject.get("tanggal_keluar").toString();
-                listBarang.add(new CheckoutBarang(no_resi, tanggal, penerima, berat, nama_petugas, sKategori, tglKeluar));
+                listBarang.add(new NodeCheckoutBarang(no_resi, tanggal, penerima, berat, nama_petugas, sKategori, tglKeluar));
             }
             return listBarang;
         }
     }
 
-    public ArrayList<CheckoutBarang> readFromFileOut(){
+    public ArrayList<NodeCheckoutBarang> readFromFileOut(){
         if(cekFileOut()){
             ArrayList listBarang = null;
             JSONParser parser = new JSONParser();

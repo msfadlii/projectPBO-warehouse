@@ -1,14 +1,14 @@
-package Model;
+package Node;
 
-public class Kategori {
+public class NodeKategori {
     private int nomor;
     private String nama;
 
-    public Kategori(int nomor, String nama) {
+    public NodeKategori(int nomor, String nama) {
         this.nomor = nomor;
         this.nama = nama;
     }
-    public Kategori(String nama) {
+    public NodeKategori(String nama) {
         this.nama = nama;
     }
 

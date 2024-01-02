@@ -1,17 +1,17 @@
 package Node;
 
-public class NodeUser {
+public class NodePetugas {
     private String username;
     private String password;
     private String nama;
 
-    public NodeUser(String username, String password, String nama) {
+    public NodePetugas(String username, String password, String nama) {
         this.username = username;
         this.password = password;
         this.nama = nama;
     }
 
-    public NodeUser(){
+    public NodePetugas(){
 
     }
 

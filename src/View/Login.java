@@ -1,11 +1,11 @@
 package View;
-import Controller.ControllerUser;
-import Model.ModelUser;
+import Controller.ControllerPetugas;
+import Model.ModelPetugas;
 
 import java.util.Scanner;
 public class Login {
-    static ModelUser modelUser = new ModelUser();
-    static ControllerUser cUser = new ControllerUser();
+    static ModelPetugas modelPetugas = new ModelPetugas();
+    static ControllerPetugas cUser = new ControllerPetugas();
     public static String username;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);

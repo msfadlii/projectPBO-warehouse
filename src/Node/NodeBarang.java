@@ -7,16 +7,15 @@ public class NodeBarang {
     private int berat;
     private String namaPetugas;
     private NodeKategori nodeKategori;
-    public NodeBarang(String no_resi, String tanggalTiba, String Penerima, int berat, String namaPetugas, String namaKategori) {
+    private NodePenerima nodePenerima;
+    public NodeBarang(String no_resi, String tanggalTiba, String penerima, String alamat, int berat, String namaPetugas, String namaKategori) {
         this.no_resi = no_resi;
         this.Tanggaltiba = tanggalTiba;
-        this.Penerima = Penerima;
+        this.nodePenerima = new NodePenerima(penerima, alamat);
+        //this.Penerima = penerima;
         this.berat = berat;
         this.namaPetugas = namaPetugas;
         this.nodeKategori = new NodeKategori(namaKategori);
-    }
-    public NodeBarang(){
-
     }
 
     public String getNo_resi() {
@@ -54,5 +53,13 @@ public class NodeBarang {
 
     public void setKategori(String kategori) {
         this.nodeKategori = new NodeKategori(kategori);
+    }
+
+    public void setNodePenerima(String penerima, String alamat) {
+        this.nodePenerima = new NodePenerima(penerima, alamat);
+    }
+
+    public NodePenerima getNodePenerima() {
+        return nodePenerima;
     }
 }

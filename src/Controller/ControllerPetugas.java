@@ -1,20 +1,17 @@
 package Controller;
 
-import Model.JSON.ModelJSON;
-import Model.ModelUser;
-import Node.NodeUser;
-import View.PetugasMain;
-import com.google.gson.reflect.TypeToken;
+import Model.ModelPetugas;
+import Node.NodePetugas;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ControllerUser {
-    static ModelUser mUser = new ModelUser();
+public class ControllerPetugas {
+    static ModelPetugas mUser = new ModelPetugas();
     static Scanner input = new Scanner(System.in);
 
     public boolean login(String uname, String pass){
-        NodeUser user = mUser.login();
+        NodePetugas user = mUser.login();
         if(user != null){
             if(uname.equals(user.getUsername())){
                 if(pass.equals(user.getPassword())){
@@ -44,10 +41,10 @@ public class ControllerUser {
     }
 
     public void listUser(){
-        ArrayList<NodeUser> arrUser = mUser.listUser();
-        for (NodeUser nodeUser:arrUser) {
-            System.out.println("Nama     : "+nodeUser.getNama());
-            System.out.println("Username : "+nodeUser.getUsername());
+        ArrayList<NodePetugas> arrUser = mUser.listUser();
+        for (NodePetugas nodePetugas :arrUser) {
+            System.out.println("Nama     : "+ nodePetugas.getNama());
+            System.out.println("Username : "+ nodePetugas.getUsername());
             System.out.println("------------------------------");
         }
     }

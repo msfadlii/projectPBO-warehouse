@@ -1,37 +1,36 @@
 package Model;
 
 import Model.JSON.ModelJSON;
-import Node.NodeUser;
-import View.PetugasMain;
+import Node.NodePetugas;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ModelUser{
+public class ModelPetugas {
     static Scanner input = new Scanner(System.in);
-    ArrayList<NodeUser> listUser;
-    ModelJSON<NodeUser> modelUserJSON;
+    ArrayList<NodePetugas> listUser;
+    ModelJSON<NodePetugas> modelUserJSON;
 
-    public ModelUser(){
-        listUser = new ArrayList<NodeUser>();
+    public ModelPetugas(){
+        listUser = new ArrayList<NodePetugas>();
         modelUserJSON = new ModelJSON<>("src/Database/user.json");
         loadData();
     }
-    public NodeUser login(){
-        NodeUser nodeUser = null;
+    public NodePetugas login(){
+        NodePetugas nodePetugas = null;
         if(modelUserJSON.checkFile()){
             if(listUser != null){
                 for(int i = 0; i< listUser.size(); i++){
-                    nodeUser = listUser.get(i);
-                    return nodeUser;
+                    nodePetugas = listUser.get(i);
+                    return nodePetugas;
                 }
             }
         }
-        return nodeUser;
+        return nodePetugas;
     }
     public void addUser(String username, String pass, String nama) {
-        listUser.add(new NodeUser(username, pass, nama));
+        listUser.add(new NodePetugas(username, pass, nama));
         commitData();
     }
 
@@ -39,16 +38,16 @@ public class ModelUser{
         listUser.remove(searchUser(uname));
     }
 
-    public ArrayList<NodeUser> listUser(){
+    public ArrayList<NodePetugas> listUser(){
         return listUser;
     }
 
-    public NodeUser getUser(int id) {
+    public NodePetugas getUser(int id) {
         return listUser.get(id);
     }
 
     public int searchUser(String nama) {
-        for (NodeUser user : listUser) {
+        for (NodePetugas user : listUser) {
             if (user.getUsername().equals(nama)) {
                 return listUser.indexOf(user);
             }
@@ -57,7 +56,7 @@ public class ModelUser{
     }
 
     private void loadData() {
-        listUser = modelUserJSON.readFromFile(new TypeToken<ArrayList<NodeUser>>() {}.getType());
+        listUser = modelUserJSON.readFromFile(new TypeToken<ArrayList<NodePetugas>>() {}.getType());
     }
 
     public void commitData() {

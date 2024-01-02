@@ -1,12 +1,10 @@
 package Model;
 
-import Model.JSON.MBarangJSON;
 import Model.JSON.MKategoriJSON;
 import Model.JSON.ModelJSON;
 import Node.NodeBarang;
 import Node.NodeCheckoutBarang;
 import Node.NodeKategori;
-import Node.NodeUser;
 import View.Login;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,17 +31,17 @@ public class ModelBarang {
         listNodeBarang = modelJSON.readFromFile(new TypeToken<ArrayList<NodeBarang>>() {}.getType());
     }
 
-    public void tambahBarang(String no_resi, String tanggalTiba, String penerima, int berat, String namaPetugas, String namaKategori) {
+    public void tambahBarang(String no_resi, String tanggalTiba, String penerima, String alamat, int berat, String namaPetugas, String namaKategori) {
         if (modelJSON.checkFile()){
             if(listNodeBarangMasuk != null){
-                listNodeBarangMasuk.add(new NodeBarang(no_resi, tanggalTiba, penerima, berat, namaPetugas, namaKategori));
-                listNodeBarang.add(new NodeBarang(no_resi, tanggalTiba, penerima, berat, namaPetugas, namaKategori));
+                listNodeBarangMasuk.add(new NodeBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori));
+                listNodeBarang.add(new NodeBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori));
                 modelJSON.writeToFile(listNodeBarangMasuk);
                 modelJSONIn.writeToFile(listNodeBarangMasuk);
             }else{
                 listNodeBarangMasuk = new ArrayList<NodeBarang>();
-                listNodeBarangMasuk.add(new NodeBarang(no_resi, tanggalTiba, penerima, berat, namaPetugas, namaKategori));
-                listNodeBarang.add(new NodeBarang(no_resi, tanggalTiba, penerima, berat, namaPetugas, namaKategori));
+                listNodeBarangMasuk.add(new NodeBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori));
+                listNodeBarang.add(new NodeBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori));
                 modelJSON.writeToFile(listNodeBarangMasuk);
                 modelJSONIn.writeToFile(listNodeBarangMasuk);
             }
@@ -55,7 +53,8 @@ public class ModelBarang {
     public void updateBarang(NodeBarang barang){
         int index = listNodeBarang.indexOf(barang);
         listNodeBarang.get(index).setBerat(barang.getBerat());
-        listNodeBarang.get(index).setPenerima(barang.getPenerima()); ;
+        listNodeBarang.get(index).setNodePenerima(barang.getNodePenerima().getNamaPenerima(), barang.getNodePenerima().getAlamat());
+//        listNodeBarang.get(index).setPenerima(barang.getPenerima()); ;
         listNodeBarang.get(index).setKategori(barang.getKategori().getNama()); ;
 
         modelJSON.writeToFile(listNodeBarang);
@@ -99,10 +98,10 @@ public class ModelBarang {
 
     public void checkoutBarang(NodeBarang nodeBarang, String tanggalKeluar){
         if(listBarangKeluar != null){
-            listBarangKeluar.add(new NodeCheckoutBarang(nodeBarang.getNo_resi(), nodeBarang.getTanggaltiba(), nodeBarang.getPenerima(), nodeBarang.getBerat(), Login.username, nodeBarang.getKategori().getNama(), tanggalKeluar));
+            listBarangKeluar.add(new NodeCheckoutBarang(nodeBarang.getNo_resi(), nodeBarang.getTanggaltiba(), nodeBarang.getNodePenerima().getNamaPenerima(), nodeBarang.getNodePenerima().getAlamat(), nodeBarang.getBerat(), Login.username, nodeBarang.getKategori().getNama(), tanggalKeluar));
         }else{
             listBarangKeluar = new ArrayList<NodeCheckoutBarang>();
-            listBarangKeluar.add(new NodeCheckoutBarang(nodeBarang.getNo_resi(), nodeBarang.getTanggaltiba(), nodeBarang.getPenerima(), nodeBarang.getBerat(), Login.username, nodeBarang.getKategori().getNama(), tanggalKeluar));
+            listBarangKeluar.add(new NodeCheckoutBarang(nodeBarang.getNo_resi(), nodeBarang.getTanggaltiba(), nodeBarang.getNodePenerima().getNamaPenerima(), nodeBarang.getNodePenerima().getAlamat(), nodeBarang.getBerat(), Login.username, nodeBarang.getKategori().getNama(), tanggalKeluar));
         }
         modelJSONOut.writeToFile(listBarangKeluar);
         deleteBarang(nodeBarang);

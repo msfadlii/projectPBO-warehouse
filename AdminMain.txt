@@ -3,7 +3,7 @@ package View.admin;
 //import org.json.simple.JSONArray;
 //import org.json.simple.parser.JSONParser;
 //import org.json.simple.parser.ParseException;
-import Node.NodeUser;
+import Node.NodePetugas;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
@@ -30,17 +30,17 @@ public class AdminMain {
                 System.out.print("Masukkan Password Petugas : ");
                 String passPetugas = input.nextLine();
 
-                File f = new File("nodeUser.json");
+                File f = new File("nodePetugas.json");
                 if(f.exists()){
                     try {
                         JsonParser jsonParser = new JsonParser();
-                        JsonArray jsonArray = (JsonArray) jsonParser.parse(new FileReader("nodeUser.json"));
+                        JsonArray jsonArray = (JsonArray) jsonParser.parse(new FileReader("nodePetugas.json"));
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty("Username", unamePetugas);
                         jsonObject.addProperty("Password", passPetugas);
                         jsonArray.add(jsonObject);
 
-                        try(FileWriter file = new FileWriter("nodeUser.json")){
+                        try(FileWriter file = new FileWriter("nodePetugas.json")){
                             file.write(jsonArray.toString());
                             file.flush();
                         }catch (IOException e){
@@ -56,7 +56,7 @@ public class AdminMain {
                     jsonObject.addProperty("Password", passPetugas);
                     jsonArray.add(jsonObject);
 
-                    try(FileWriter file = new FileWriter("nodeUser.json")){
+                    try(FileWriter file = new FileWriter("nodePetugas.json")){
                         file.write(jsonArray.toString());
                         file.flush();
                     }catch (IOException e){
@@ -69,11 +69,11 @@ public class AdminMain {
                 System.out.println("----- Hapus Petugas -----");
                 System.out.print("Masukkan Username Petugas : ");
                 String unamePetugas = input.nextLine();
-                File f = new File("nodeUser.json");
+                File f = new File("nodePetugas.json");
                 if(f.exists()){
                     try {
                         JsonParser jsonParser = new JsonParser();
-                        JsonArray jsonArray = (JsonArray) jsonParser.parse(new FileReader("nodeUser.json"));
+                        JsonArray jsonArray = (JsonArray) jsonParser.parse(new FileReader("nodePetugas.json"));
                         JsonObject jsonObject = new Gson().fromJson(jsonArray, JsonObject.class);
                         
 
@@ -104,8 +104,8 @@ public class AdminMain {
             case 4: {
                 System.out.println("----- LIST PETUGAS -----");
                 Gson gson = new Gson();
-                User nodeUser = new User();
-                Path path = Paths.get("nodeUser.json");
+                User nodePetugas = new User();
+                Path path = Paths.get("nodePetugas.json");
                 try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)){
                     JsonParser parser = new JsonParser();
                     JsonElement tree = parser.parse(reader);
@@ -131,7 +131,7 @@ public class AdminMain {
     }
 
 //    private static void parseJSONObject(JSONObject jsonObject){
-//        JSONObject jObj = (JSONObject) jsonObject.get("nodeUser");
+//        JSONObject jObj = (JSONObject) jsonObject.get("nodePetugas");
 //        String username = (String) jObj.get("Username");
 //        String password = (String) jObj.get("Password");
 //

@@ -20,7 +20,7 @@ public class ControllerBarang implements ControllerTemplate{
         this.modelBarang = barang;
     }
     @Override
-    public void insert(String no_resi, String tanggalTiba, String penerima, int berat, String namaPetugas, String namaKategori){
+    public void insert(String no_resi, String tanggalTiba, String penerima, String alamat, int berat, String namaPetugas, String namaKategori){
         String no_resiBaru = no_resi;
         while(true){
             NodeBarang cekResi = modelBarang.getBarang(no_resi);
@@ -29,23 +29,24 @@ public class ControllerBarang implements ControllerTemplate{
                 System.out.print("Masukkan Nomor Resi : ");
                 Scanner input = new Scanner(System.in);
                 no_resiBaru = input.nextLine();
-                modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, berat, namaPetugas, namaKategori);
+                modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori);
                 System.out.println("Barang berhasil ditambahkan!");
             }else{
                 break;
             }
         }
-        modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, berat, namaPetugas, namaKategori);
+        modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori);
     }
     @Override
-    public void update(String no_resi, String penerima, int berat, String namaKategori){
+    public void update(String no_resi, String penerima, String alamat, int berat, String namaKategori){
         NodeBarang barang = modelBarang.getBarang(no_resi);
 
         if(barang == null){
             System.out.println("Barang tidak ada!");
         }else{
             barang.setBerat(berat);
-            barang.setPenerima(penerima);
+//            barang.setPenerima(penerima);
+            barang.setNodePenerima(penerima, alamat);
             barang.setKategori(namaKategori);
             modelBarang.updateBarang(barang);
             System.out.println("Barang berhasil diupdate!");
@@ -159,14 +160,15 @@ public class ControllerBarang implements ControllerTemplate{
             if (jenis_laporan.equals("masuk")) {
                 writer.write(" \t\t\t\t\t\t\t\t\t\t\tLAPORAN BARANG MASUK"+
                         "\n------------------------------------------------------------------------------------------------------------------------------\n");
-                writer.write("\nNOMOR RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tTANGGAL \t\t\t\t\tPETUGAS\n");
+                writer.write("\nNOMOR RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tALAMAT \t\tTANGGAL \t\t\t\t\tPETUGAS\n");
                 if (modelBarang.listBarangMasuk() != null) {
                     for (NodeBarang nodeBarang : modelBarang.listBarangMasuk()){
                         writer.write(
                                 nodeBarang.getNo_resi()+" \t\t"+
                                         nodeBarang.getKategori().getNama()+" \t\t\t"+
                                         nodeBarang.getBerat()+" \t\t"+
-                                        nodeBarang.getPenerima()+" \t\t\t"+
+                                        nodeBarang.getNodePenerima().getNamaPenerima()+" \t\t\t"+
+                                        nodeBarang.getNodePenerima().getAlamat()+" \t\t\t"+
                                         nodeBarang.getTanggaltiba()+" \t\t"+
                                         nodeBarang.getNamaPetugas()+"\n"
                         );
@@ -178,14 +180,15 @@ public class ControllerBarang implements ControllerTemplate{
                 writer.write(" \t\t\t\t\t\t\t\t\t\t\tLAPORAN BARANG KELUAR"+
                         "\n------------------------------------------------------------------------------------------------------------------------------\n");
                 writer.write("\nNOMOR" +
-                        " RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tTANGGAL MASUK \t\t\t\t\tPETUGAS \t\t\tTANGGAL KELUAR\n");
+                        " RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tALAMAT \t\tTANGGAL MASUK \t\t\t\t\tPETUGAS \t\t\tTANGGAL KELUAR\n");
                 if (modelBarang.listBarangKeluar() != null) {
                     for (NodeCheckoutBarang barang: modelBarang.listBarangKeluar()){
                         writer.write(
                                 barang.getNo_resi()+" \t\t"+
                                         barang.getKategori().getNama()+" \t\t\t"+
                                         barang.getBerat()+" \t\t"+
-                                        barang.getPenerima()+" \t\t\t"+
+                                        barang.getNodePenerima().getNamaPenerima()+" \t\t\t"+
+                                        barang.getNodePenerima().getAlamat()+" \t\t\t"+
                                         barang.getTanggaltiba()+" \t\t\t"+
                                         barang.getNamaPetugas()+" \t\t\t\t"+
                                         barang.getTanggalKeluar()+"\n"
@@ -197,14 +200,15 @@ public class ControllerBarang implements ControllerTemplate{
             } else {
                 writer.write(" \t\t\t\t\t\t\t\t\t\t\tLAPORAN BARANG DI GUDANG"+
                         "\n------------------------------------------------------------------------------------------------------------------------------\n");
-                writer.write("\nNOMOR RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tTANGGAL \t\t\t\t\tPETUGAS\n");
+                writer.write("\nNOMOR RESI \t\tKATEGORI \t\tBERAT \t\tPENERIMA \t\tALAMAT \t\tTANGGAL \t\t\t\t\tPETUGAS\n");
                 if (modelBarang.listBarang() != null) {
                     for (NodeBarang nodeBarang : modelBarang.listBarang()){
                         writer.write(
                                 nodeBarang.getNo_resi()+" \t\t"+
                                         nodeBarang.getKategori().getNama()+" \t\t\t"+
                                         nodeBarang.getBerat()+" \t\t"+
-                                        nodeBarang.getPenerima()+" \t\t\t"+
+                                        nodeBarang.getNodePenerima().getNamaPenerima()+" \t\t\t"+
+                                        nodeBarang.getNodePenerima().getAlamat()+" \t\t\t"+
                                         nodeBarang.getTanggaltiba()+" \t\t"+
                                         nodeBarang.getNamaPetugas()+"\n"
                         );

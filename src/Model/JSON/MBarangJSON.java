@@ -36,7 +36,8 @@ public class MBarangJSON {
                 JSONObject objBarang = new JSONObject();
                 objBarang.put("no_resi", nodeBarang.getNo_resi());
                 objBarang.put("kategori", nodeBarang.getKategori().getNama());
-                objBarang.put("penerima", nodeBarang.getPenerima());
+                objBarang.put("penerima", nodeBarang.getNodePenerima().getNamaPenerima());
+                objBarang.put("alamat", nodeBarang.getNodePenerima().getAlamat());
                 objBarang.put("berat", nodeBarang.getBerat());
                 objBarang.put("tanggal", nodeBarang.getTanggaltiba());
                 objBarang.put("petugas_in", nodeBarang.getNamaPetugas());
@@ -68,10 +69,11 @@ public class MBarangJSON {
                 String no_resi = jsonObject.get("no_resi").toString();
                 String sKategori = jsonObject.get("kategori").toString();
                 String penerima = jsonObject.get("penerima").toString();
+                String alamat = jsonObject.get("alamat").toString();
                 int berat = Integer.parseInt(jsonObject.get("berat").toString());
                 String tanggal = jsonObject.get("tanggal").toString();
                 String nama_petugas = jsonObject.get("petugas_in").toString();
-                listNodeBarang.add(new NodeBarang(no_resi, tanggal, penerima, berat, nama_petugas, sKategori));
+                listNodeBarang.add(new NodeBarang(no_resi, tanggal, penerima, alamat, berat, nama_petugas, sKategori));
             }
             return listNodeBarang;
         }
@@ -208,10 +210,11 @@ public class MBarangJSON {
                 String sKategori = jsonObject.get("kategori").toString();
                 int berat = Integer.parseInt(jsonObject.get("berat").toString());
                 String penerima = jsonObject.get("penerima").toString();
+                String alamat = jsonObject.get("alamat").toString();
                 String tanggal = jsonObject.get("tanggal_masuk").toString();
                 String nama_petugas = jsonObject.get("petugas").toString();
                 String tglKeluar = jsonObject.get("tanggal_keluar").toString();
-                listBarang.add(new NodeCheckoutBarang(no_resi, tanggal, penerima, berat, nama_petugas, sKategori, tglKeluar));
+                listBarang.add(new NodeCheckoutBarang(no_resi, tanggal, penerima, alamat, berat, nama_petugas, sKategori, tglKeluar));
             }
             return listBarang;
         }

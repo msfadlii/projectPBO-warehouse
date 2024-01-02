@@ -1,15 +1,14 @@
 package View;
-import Controller.ControllerUser;
-import Model.ModelUser;
-import Node.NodeUser;
+import Controller.ControllerPetugas;
+import Node.NodePetugas;
 
 import java.util.*;
 
 public class AdminMain {
     static Scanner input = new Scanner(System.in);
-    static ArrayList<NodeUser> nodeUserArrList = new ArrayList<>();
+    static ArrayList<NodePetugas> nodePetugasArrList = new ArrayList<>();
 //    static ModelUser cUser = new ModelUser();
-    static ControllerUser cUser = new ControllerUser();
+    static ControllerPetugas cUser = new ControllerPetugas();
     void menuAdmin(){
         System.out.println("----- MENU ADMIN -----");
         System.out.println("1. Tambah Petugas\n2. Hapus Petugas\n3. List Petugas");

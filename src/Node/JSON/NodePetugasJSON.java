@@ -1,10 +1,10 @@
 package Node.JSON;
 
-public class NodeUserJSON {
+public class NodePetugasJSON {
     private String username;
     private String password;
     private String nama;
-    public NodeUserJSON(){
+    public NodePetugasJSON(){
         this.username = "username";
         this.password = "password";
         this.nama = "nama";

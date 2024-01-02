@@ -26,15 +26,17 @@ public class ViewBarang {
         String no_resi = input.nextLine();
         LocalDateTime tanggalTiba = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        System.out.print("Masukkan Penerima barang : ");
-        String Penerima = input.nextLine();
+        System.out.print("Masukkan nama penerima : ");
+        String penerima = input.nextLine();
+        System.out.print("Masukkan alamat penerima : ");
+        String alamat = input.nextLine();
         System.out.print("Masukkan berat barang : ");
         int berat = input.nextInt(); input.nextLine();
         controllerBarang.listKategori();
         System.out.print("Pilih Kategori : ");
         int pilih_kategori = input.nextInt();
         String kat = controllerBarang.pilihKategori(pilih_kategori);
-        controllerBarang.insert(no_resi, tanggalTiba.format(format), Penerima, berat, namaP, kat);
+        controllerBarang.insert(no_resi, tanggalTiba.format(format), penerima, alamat, berat, namaP, kat);
         input.nextLine();
     }
 
@@ -44,13 +46,15 @@ public class ViewBarang {
         String no_resi = input.nextLine();
         System.out.print("Masukkan Berat : ");
         int berat = input.nextInt(); input.nextLine();
-        System.out.print("Masukkan Penerima : ");
+        System.out.print("Masukkan nama penerima : ");
         String penerima = input.nextLine();
+        System.out.print("Masukkan alamat penerima : ");
+        String alamat = input.nextLine();
         controllerBarang.listKategori();
         System.out.print("Pilih Kategori : ");
         int pilih_kategori = input.nextInt();
         String kat = controllerBarang.pilihKategori(pilih_kategori);
-        controllerBarang.update(no_resi, penerima, berat, kat);
+        controllerBarang.update(no_resi, penerima, alamat, berat, kat);
         input.nextLine();
     }
 
@@ -71,7 +75,8 @@ public class ViewBarang {
                 System.out.println("Nomor Resi      : "+ arrBarang.get(i).getNo_resi());
                 System.out.println("Kategori        : " + arrBarang.get(i).getKategori().getNama());
                 System.out.println("Berat           : "+ arrBarang.get(i).getBerat());
-                System.out.println("Penerima        : "+ arrBarang.get(i).getPenerima());
+                System.out.println("Nama Penerima   : "+ arrBarang.get(i).getNodePenerima().getNamaPenerima());
+                System.out.println("Alamat Penerima : "+ arrBarang.get(i).getNodePenerima().getAlamat());
                 System.out.println("Tanggal         : "+ arrBarang.get(i).getTanggaltiba());
                 System.out.println("Petugas         : "+ arrBarang.get(i).getNamaPetugas());
                 System.out.println("-----------------"+Warna.reset_warna);
@@ -89,7 +94,8 @@ public class ViewBarang {
                 System.out.println("Nomor Resi      : "+ arrBarang.get(i).getNo_resi());
                 System.out.println("Kategori        : " + arrBarang.get(i).getKategori().getNama());
                 System.out.println("Berat           : "+ arrBarang.get(i).getBerat());
-                System.out.println("Penerima        : "+ arrBarang.get(i).getPenerima());
+                System.out.println("Nama Penerima   : "+ arrBarang.get(i).getNodePenerima().getNamaPenerima());
+                System.out.println("Alamat Penerima : "+ arrBarang.get(i).getNodePenerima().getAlamat());
                 System.out.println("Tanggal         : "+ arrBarang.get(i).getTanggaltiba());
                 System.out.println("Petugas         : "+ arrBarang.get(i).getNamaPetugas());
                 System.out.println("-----------------"+Warna.reset_warna);
@@ -107,7 +113,8 @@ public class ViewBarang {
                 System.out.println("Nomor Resi      : "+ arrBarang.get(i).getNo_resi());
                 System.out.println("Kategori        : "+ arrBarang.get(i).getKategori().getNama());
                 System.out.println("Berat           : "+ arrBarang.get(i).getBerat());
-                System.out.println("Penerima        : "+ arrBarang.get(i).getPenerima());
+                System.out.println("Nama Penerima   : "+ arrBarang.get(i).getNodePenerima().getNamaPenerima());
+                System.out.println("Alamat Penerima : "+ arrBarang.get(i).getNodePenerima().getAlamat());
                 System.out.println("Tanggal Masuk   : "+ arrBarang.get(i).getTanggaltiba());
                 System.out.println("Tanggal Keluar  : "+ arrBarang.get(i).getTanggalKeluar());
                 System.out.println("Petugas         : "+ arrBarang.get(i).getNamaPetugas());
@@ -127,7 +134,8 @@ public class ViewBarang {
             System.out.println("Nomor Resi      : "+ dataNodeBarang.getNo_resi());
             System.out.println("Kategori        : " + dataNodeBarang.getKategori().getNama());
             System.out.println("Berat           : "+ dataNodeBarang.getBerat());
-            System.out.println("Penerima        : "+ dataNodeBarang.getPenerima());
+            System.out.println("Nama Penerima   : "+ dataNodeBarang.getNodePenerima().getNamaPenerima());
+            System.out.println("Alamat Penerima : "+ dataNodeBarang.getNodePenerima().getAlamat());
             System.out.println("Tanggal         : "+ dataNodeBarang.getTanggaltiba());
             System.out.println("Petugas         : "+ dataNodeBarang.getNamaPetugas());
         }else{

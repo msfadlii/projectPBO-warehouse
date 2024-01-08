@@ -12,19 +12,18 @@ public class ModelPetugas {
     ArrayList<NodePetugas> listUser;
     ModelJSON<NodePetugas> modelUserJSON;
 
+
     public ModelPetugas(){
         listUser = new ArrayList<NodePetugas>();
         modelUserJSON = new ModelJSON<>("src/Database/user.json");
+        listUser = modelUserJSON.readFromFile(new TypeToken<ArrayList<NodePetugas>>() {}.getType());
         loadData();
     }
-    public NodePetugas login(){
-        NodePetugas nodePetugas = null;
+    public ArrayList<NodePetugas> login(){
+        ArrayList<NodePetugas> nodePetugas = new ArrayList<>();
         if(modelUserJSON.checkFile()){
             if(listUser != null){
-                for(int i = 0; i< listUser.size(); i++){
-                    nodePetugas = listUser.get(i);
-                    return nodePetugas;
-                }
+                return listUser;
             }
         }
         return nodePetugas;

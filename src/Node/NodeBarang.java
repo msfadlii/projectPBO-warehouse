@@ -8,10 +8,10 @@ public class NodeBarang {
     private String namaPetugas;
     private NodeKategori nodeKategori;
     private NodePenerima nodePenerima;
-    public NodeBarang(String no_resi, String tanggalTiba, String penerima, String alamat, int berat, String namaPetugas, String namaKategori) {
+    public NodeBarang(String no_resi, String tanggalTiba, String penerima, String alamat, String kota, int berat, String namaPetugas, String namaKategori) {
         this.no_resi = no_resi;
         this.Tanggaltiba = tanggalTiba;
-        this.nodePenerima = new NodePenerima(penerima, alamat);
+        this.nodePenerima = new NodePenerima(penerima, alamat, kota);
         //this.Penerima = penerima;
         this.berat = berat;
         this.namaPetugas = namaPetugas;
@@ -55,8 +55,8 @@ public class NodeBarang {
         this.nodeKategori = new NodeKategori(kategori);
     }
 
-    public void setNodePenerima(String penerima, String alamat) {
-        this.nodePenerima = new NodePenerima(penerima, alamat);
+    public void setNodePenerima(String penerima, String alamat, String kota) {
+        this.nodePenerima = new NodePenerima(penerima, alamat, kota);
     }
 
     public NodePenerima getNodePenerima() {

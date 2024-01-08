@@ -1,17 +1,17 @@
 package View;
 import Controller.ControllerPetugas;
+import Model.ModelPetugas;
 import Node.NodePetugas;
 
 import java.util.*;
 
 public class AdminMain {
     static Scanner input = new Scanner(System.in);
-    static ArrayList<NodePetugas> nodePetugasArrList = new ArrayList<>();
-//    static ModelUser cUser = new ModelUser();
-    static ControllerPetugas cUser = new ControllerPetugas();
+    static ModelPetugas modelPetugas = new ModelPetugas();
+    static ControllerPetugas cUser = new ControllerPetugas(modelPetugas);
     void menuAdmin(){
         System.out.println("----- MENU ADMIN -----");
-        System.out.println("1. Tambah Petugas\n2. Hapus Petugas\n3. List Petugas");
+        System.out.println("1. Tambah Petugas\n2. Hapus Petugas\n3. List Petugas\n4. Logout");
         System.out.print("Masukkan pilihan anda : ");
         int pilihan = input.nextInt();
         input.nextLine();
@@ -38,6 +38,10 @@ public class AdminMain {
             case 3: {
                 System.out.println("----- LIST PETUGAS -----");
                 cUser.listUser();
+                break;
+            }
+            case 4: {
+                Login.main(null);
                 break;
             }
             default:

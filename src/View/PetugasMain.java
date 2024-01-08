@@ -49,15 +49,26 @@ public class PetugasMain {
                     System.out.println(Warna.menu+"1. Barang Masuk\n2. Barang di Gudang\n3. Barang Keluar");
                     System.out.print(Warna.sub_judul+"Pilihan : ");
                     int pilih_list = input.nextInt(); input.nextLine();
+                    System.out.print(Warna.sub_judul+"Ingin mem-filter barang ? : ");
+                    String quest = input.nextLine();
+                    String filter="";
+                    String formatFilter="";
+                    if(quest.toLowerCase().equals("ya")){
+                        System.out.println(Warna.komen + "Filter berdasarkan Tanggal atau " +
+                                "Kota\nContoh : 10-12-2023 atau Surabaya" + "\u001B[0m");
+                        System.out.print("Masukkan filter : ");
+                        filter = input.nextLine();
+                        formatFilter = filter.substring(0, 1).toUpperCase()+filter.substring(1).toLowerCase();
+                    }
                     switch (pilih_list){
                         case 1:
-                            viewBarang.listMasuk();
+                            viewBarang.listMasuk(formatFilter);
                             break;
                         case 2:
-                            viewBarang.list();
+                            viewBarang.list(formatFilter);
                             break;
                         case 3:
-                            viewBarang.listKeluar();
+                            viewBarang.listKeluar(formatFilter);
                             break;
                         default:
                             break;
@@ -75,7 +86,7 @@ public class PetugasMain {
                 case 5: {
                     //cetak laporan
                     System.out.println(Warna.judul+"----- CETAK LAPORAN -----"+Warna.reset_warna);
-                    System.out.println(Warna.menu+"1. Laporan Barang Masuk\n2. Laporan Barang Keluar\n3. Laporan Barang di Gudang\n4. Cetak Laporan PDF\n5. Kembali");
+                    System.out.println(Warna.menu+"1. Laporan Barang Masuk\n2. Laporan Barang Keluar\n3. Laporan Barang di Gudang\n4. Kembali");
                     System.out.print(Warna.sub_judul+"Pilihan Cetak : ");
                     int pilih_cetak = input.nextInt();
 
@@ -90,13 +101,14 @@ public class PetugasMain {
                             cBarang.buatFileLaporan("");
                             break;
                         case 4:
-                            cBarang.cetakLaporanPdf("masuk");
-                            break;
-                        case 5:
                             break;
                         default:
                             break;
                     }
+                    break;
+                }
+                case 6: {
+                    Login.main(null);
                     break;
                 }
             }

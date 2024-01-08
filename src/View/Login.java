@@ -5,8 +5,9 @@ import Model.ModelPetugas;
 import java.util.Scanner;
 public class Login {
     static ModelPetugas modelPetugas = new ModelPetugas();
-    static ControllerPetugas cUser = new ControllerPetugas();
-    public static String username;
+    static ControllerPetugas cPetugas = new ControllerPetugas(modelPetugas);
+    public static String username = "";
+    static String pass = "";
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.println("----- LOGIN -----");
@@ -14,13 +15,13 @@ public class Login {
             System.out.print("Masukkan Username : ");
             username = input.nextLine();
             System.out.print("Masukkan Password : ");
-            String pass = input.nextLine();
+            pass = input.nextLine();
 
             if (username.equals("admin") && pass.equals("admin")) {
                 System.out.println("Login Admin Berhasil !");
                 AdminMain.main(null);
             }
-            boolean cekLogin = cUser.login(username, pass);
+            boolean cekLogin = cPetugas.login(username, pass);
             if(cekLogin){
                 System.out.println("Login Berhasil !");
                 PetugasMain.main(null);

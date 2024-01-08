@@ -20,7 +20,7 @@ public class ControllerBarang implements ControllerTemplate{
         this.modelBarang = barang;
     }
     @Override
-    public void insert(String no_resi, String tanggalTiba, String penerima, String alamat, int berat, String namaPetugas, String namaKategori){
+    public void insert(String no_resi, String tanggalTiba, String penerima, String alamat, String kota, int berat, String namaPetugas, String namaKategori){
         String no_resiBaru = no_resi;
         while(true){
             NodeBarang cekResi = modelBarang.getBarang(no_resi);
@@ -29,16 +29,16 @@ public class ControllerBarang implements ControllerTemplate{
                 System.out.print("Masukkan Nomor Resi : ");
                 Scanner input = new Scanner(System.in);
                 no_resiBaru = input.nextLine();
-                modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori);
+                modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, alamat, kota, berat, namaPetugas, namaKategori);
                 System.out.println("Barang berhasil ditambahkan!");
             }else{
                 break;
             }
         }
-        modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, alamat, berat, namaPetugas, namaKategori);
+        modelBarang.tambahBarang(no_resi, tanggalTiba, penerima, alamat, kota, berat, namaPetugas, namaKategori);
     }
     @Override
-    public void update(String no_resi, String penerima, String alamat, int berat, String namaKategori){
+    public void update(String no_resi, String penerima, String alamat, String kota, int berat, String namaKategori){
         NodeBarang barang = modelBarang.getBarang(no_resi);
 
         if(barang == null){
@@ -46,7 +46,7 @@ public class ControllerBarang implements ControllerTemplate{
         }else{
             barang.setBerat(berat);
 //            barang.setPenerima(penerima);
-            barang.setNodePenerima(penerima, alamat);
+            barang.setNodePenerima(penerima, alamat, kota);
             barang.setKategori(namaKategori);
             modelBarang.updateBarang(barang);
             System.out.println("Barang berhasil diupdate!");
@@ -63,26 +63,39 @@ public class ControllerBarang implements ControllerTemplate{
             System.out.println("Barang berhasil dihapus!");
         }
     }
-
-
-    public ArrayList<NodeBarang> viewBarangMasuk(){
-        ArrayList<NodeBarang> barangArrayList = modelBarang.listBarangMasuk();
-        if(barangArrayList == null){
-            barangArrayList = new ArrayList<>();
+    public ArrayList<NodeBarang> viewBarangMasuk(String filter){
+        ArrayList<NodeBarang> barangArrayList = null;
+        if(filter.equals("")){
+            barangArrayList = modelBarang.listBarangMasuk();
+        }else{
+            barangArrayList = modelBarang.getBarangMasuk(filter);
+            if(barangArrayList == null){
+                barangArrayList = new ArrayList<>();
+            }
         }
         return barangArrayList;
     }
-    public ArrayList<NodeBarang> viewBarang(){
-        ArrayList<NodeBarang> barangArrayList = modelBarang.listBarang();
-        if(barangArrayList == null){
-            barangArrayList = new ArrayList<>();
+    public ArrayList<NodeBarang> viewBarang(String filter){
+        ArrayList<NodeBarang> barangArrayList = null;
+        if(filter.equals("")){
+            barangArrayList = modelBarang.listBarang();
+        }else{
+            barangArrayList = modelBarang.getBarangGudang(filter);
+            if(barangArrayList == null){
+                barangArrayList = new ArrayList<>();
+            }
         }
         return barangArrayList;
     }
-    public ArrayList<NodeCheckoutBarang> viewBarangKeluar(){
-        ArrayList<NodeCheckoutBarang> barangArrayList = modelBarang.listBarangKeluar();
-        if(barangArrayList == null){
-            barangArrayList = new ArrayList<>();
+    public ArrayList<NodeCheckoutBarang> viewBarangKeluar(String filter){
+        ArrayList<NodeCheckoutBarang> barangArrayList = null;
+        if(filter.equals("")){
+            barangArrayList = modelBarang.listBarangKeluar();
+        }else{
+            barangArrayList = modelBarang.getBarangKeluar(filter);
+            if(barangArrayList == null){
+                barangArrayList = new ArrayList<>();
+            }
         }
         return barangArrayList;
     }
